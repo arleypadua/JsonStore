@@ -84,7 +84,7 @@ namespace JsonStore
             return defaultValues;
         }
 
-        public void TrackDocumentFromJsonContent(string jsonContent)
+        public TDocument TrackDocumentFromJsonContent(string jsonContent)
         {
             if (jsonContent == null) throw new ArgumentNullException(nameof(jsonContent));
 
@@ -98,6 +98,8 @@ namespace JsonStore
                 throw new InvalidOperationException("This document already exists on the underlying document collection.");
 
             _documentsInScope.Add(document.Id, new DocumentState<TDocument, TId, TContent>(DocumentStates.Unmodified, document));
+
+            return document;
         }
 
         public void Add(TDocument document)
@@ -143,9 +145,18 @@ namespace JsonStore
         }
     }
 
-    public abstract class Collection<TDocument, TContent>
+    public abstract class Collection<TDocument, TContent> : Collection<TDocument, string, TContent>
         where TContent : class
         where TDocument : Document<TContent, string>, new()
     {
+        protected Collection(IStoreDocuments documentsStore, string name = null) 
+            : base(documentsStore, name)
+        {
+        }
+
+        protected Collection(JsonSerializerSettings jsonSerializerSettings, IStoreDocuments documentsStore, string name = null) 
+            : base(jsonSerializerSettings, documentsStore, name)
+        {
+        }
     }
 }
