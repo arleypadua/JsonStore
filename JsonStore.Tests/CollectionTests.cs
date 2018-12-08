@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using JsonStore.Abstractions;
+﻿using JsonStore.Abstractions;
 using Moq;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace JsonStore.Tests

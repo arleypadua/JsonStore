@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonStore", "SqlJsonStore\JsonStore.csproj", "{6E2D7E02-AC65-45E2-93B5-743C70933B8A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonStore.SqlServer", "JsonStore.SqlServer\JsonStore.SqlServer.csproj", "{24F552EF-A114-4D00-920C-E3CB523F7304}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonStore.Tests", "JsonStore.Tests\JsonStore.Tests.csproj", "{CD029D4D-38CC-4D5B-B624-D6E9132749AE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonStore", "JsonStore\JsonStore.csproj", "{EBDE7B75-9C39-4DE3-9821-DD7D31546128}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6E2D7E02-AC65-45E2-93B5-743C70933B8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E2D7E02-AC65-45E2-93B5-743C70933B8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E2D7E02-AC65-45E2-93B5-743C70933B8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E2D7E02-AC65-45E2-93B5-743C70933B8A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{24F552EF-A114-4D00-920C-E3CB523F7304}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{24F552EF-A114-4D00-920C-E3CB523F7304}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24F552EF-A114-4D00-920C-E3CB523F7304}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{CD029D4D-38CC-4D5B-B624-D6E9132749AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD029D4D-38CC-4D5B-B624-D6E9132749AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD029D4D-38CC-4D5B-B624-D6E9132749AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBDE7B75-9C39-4DE3-9821-DD7D31546128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBDE7B75-9C39-4DE3-9821-DD7D31546128}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBDE7B75-9C39-4DE3-9821-DD7D31546128}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBDE7B75-9C39-4DE3-9821-DD7D31546128}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

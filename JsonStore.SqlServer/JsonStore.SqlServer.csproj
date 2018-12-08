@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SqlJsonStore\JsonStore.csproj" />
+    <ProjectReference Include="..\JsonStore\JsonStore.csproj" />
   </ItemGroup>
 
 </Project>
