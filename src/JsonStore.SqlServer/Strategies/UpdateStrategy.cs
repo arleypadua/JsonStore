@@ -12,7 +12,7 @@ namespace JsonStore.SqlServer.Strategies
                 .AsUpdate(CollectionInstance.GetIndexedValues(Document, ignoreIdKey: true))
                 .Where(Collection.IdKey, Document.Id);
             
-            return Compiler.Compile(query).RawSql;
+            return Compiler.Compile(query).ToString();
         }
 
 

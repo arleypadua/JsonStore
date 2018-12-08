@@ -11,7 +11,7 @@ namespace JsonStore.SqlServer.Strategies
             var query = new Query(CollectionInstance.Name)
                 .AsInsert(CollectionInstance.GetIndexedValues(Document));
             
-            return Compiler.Compile(query).RawSql;
+            return Compiler.Compile(query).ToString();
         }
 
 

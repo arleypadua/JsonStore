@@ -9,9 +9,8 @@ namespace JsonStore.Tests
 {
     public class CollectionTests
     {
-        private IStoreDocuments _documentsStore = new Mock<IStoreDocuments>().Object;
+        private readonly IStoreDocuments _documentsStore = new Mock<IStoreDocuments>().Object;
         
-
         [Fact]
         public void InstantiatedCollection_ShouldHaveItsContentName()
         {

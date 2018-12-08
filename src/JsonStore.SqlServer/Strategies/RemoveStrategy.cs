@@ -12,7 +12,7 @@ namespace JsonStore.SqlServer.Strategies
                 .AsDelete()
                 .Where(Collection.IdKey, Document.Id);
             
-            return Compiler.Compile(query).RawSql;
+            return Compiler.Compile(query).ToString();
         }
 
 
