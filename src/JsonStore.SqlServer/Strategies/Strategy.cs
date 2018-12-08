@@ -1,5 +1,6 @@
-﻿using System;
+﻿using SqlKata;
 using SqlKata.Compilers;
+using System;
 
 namespace JsonStore.SqlServer.Strategies
 {
@@ -7,7 +8,7 @@ namespace JsonStore.SqlServer.Strategies
     {
         protected static readonly SqlServerCompiler Compiler = new SqlServerCompiler();
 
-        public abstract string GetCommand();
+        public abstract SqlResult GetCommand();
     }
 
     public abstract class Strategy<TDocument, TId, TContent> : Strategy

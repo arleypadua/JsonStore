@@ -6,12 +6,12 @@ namespace JsonStore.SqlServer.Strategies
         where TContent : class
         where TDocument : Document<TContent, TId>, new()
     {
-        public override string GetCommand()
+        public override SqlResult GetCommand()
         {
             var query = new Query(CollectionInstance.Name)
                 .AsInsert(CollectionInstance.GetIndexedValues(Document));
             
-            return Compiler.Compile(query).ToString();
+            return Compiler.Compile(query);
         }
 
 

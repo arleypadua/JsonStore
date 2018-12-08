@@ -6,13 +6,13 @@ namespace JsonStore.SqlServer.Strategies
         where TContent : class
         where TDocument : Document<TContent, TId>, new()
     {
-        public override string GetCommand()
+        public override SqlResult GetCommand()
         {
             var query = new Query(CollectionInstance.Name)
                 .AsDelete()
                 .Where(Collection.IdKey, Document.Id);
-            
-            return Compiler.Compile(query).ToString();
+
+            return Compiler.Compile(query);
         }
 
 

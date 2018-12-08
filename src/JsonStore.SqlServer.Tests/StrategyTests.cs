@@ -22,7 +22,7 @@ namespace JsonStore.SqlServer.Tests
             var strategy = new InsertStrategy<Document<TestContent>, string, TestContent>(collection, document);
             var command = strategy.GetCommand();
 
-            Assert.Equal("INSERT INTO [TestContent] ([_Document], [_Id], [MyNumber]) VALUES ('{\"Id\":\"id\",\"MyNumber\":5}', 'id', 5)", command);
+            Assert.Equal("INSERT INTO [TestContent] ([_Document], [_Id], [MyNumber]) VALUES ('{\"Id\":\"id\",\"MyNumber\":5}', 'id', 5)", command.ToString());
         }
 
         [Fact]
@@ -36,8 +36,22 @@ namespace JsonStore.SqlServer.Tests
             var strategy = new UpdateStrategy<Document<TestContent>, string, TestContent>(collection, document);
             var command = strategy.GetCommand();
 
-            Assert.Equal("UPDATE [TestContent] SET [_Document] = '{\"Id\":\"id\",\"MyNumber\":10}', [MyNumber] = 10 WHERE [_Id] = 'id'", command);
+            Assert.Equal("UPDATE [TestContent] SET [_Document] = '{\"Id\":\"id\",\"MyNumber\":10}', [MyNumber] = 10 WHERE [_Id] = 'id'", command.ToString());
         }
+
+        //[Fact]
+        //public void UpdateStrategyWithDocumentContainingMaliciousString_WhenGettingCommand_EscapedSqlCommandShouldBeExpected()
+        //{
+        //    var collection = new TestCollection(_documentsStore);
+        //    var document = collection.TrackDocumentFromJsonContent("{ \"Id\":\"id'; Select * from users; --\", \"MyNumber\":5 }");
+
+        //    document.Content.ChangeNumber(10);
+
+        //    var strategy = new UpdateStrategy<Document<TestContent>, string, TestContent>(collection, document);
+        //    var command = strategy.GetCommand();
+
+        //    Assert.Equal("", command.ToString()); // TODO
+        //}
 
         [Fact]
         public void RemoveStrategyWithDocument_WhenGettingCommand_SqlCommandShouldBeExpected()
@@ -48,7 +62,7 @@ namespace JsonStore.SqlServer.Tests
             var strategy = new RemoveStrategy<Document<TestContent>, string, TestContent>(collection, document);
             var command = strategy.GetCommand();
 
-            Assert.Equal("DELETE FROM [TestContent] WHERE [_Id] = 'id'", command);
+            Assert.Equal("DELETE FROM [TestContent] WHERE [_Id] = 'id'", command.ToString());
         }
 
         class TestCollection : Collection<Document<TestContent>, TestContent>
