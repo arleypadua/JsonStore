@@ -1,10 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using JsonStore.Abstractions;
 using JsonStore.SqlServer.Strategies;
 using Moq;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace JsonStore.SqlServer.Tests
@@ -38,20 +37,6 @@ namespace JsonStore.SqlServer.Tests
 
             Assert.Equal("UPDATE [TestContent] SET [_Document] = '{\"Id\":\"id\",\"MyNumber\":10}', [MyNumber] = 10 WHERE [_Id] = 'id'", command.ToString());
         }
-
-        //[Fact]
-        //public void UpdateStrategyWithDocumentContainingMaliciousString_WhenGettingCommand_EscapedSqlCommandShouldBeExpected()
-        //{
-        //    var collection = new TestCollection(_documentsStore);
-        //    var document = collection.TrackDocumentFromJsonContent("{ \"Id\":\"id'; Select * from users; --\", \"MyNumber\":5 }");
-
-        //    document.Content.ChangeNumber(10);
-
-        //    var strategy = new UpdateStrategy<Document<TestContent>, string, TestContent>(collection, document);
-        //    var command = strategy.GetCommand();
-
-        //    Assert.Equal("", command.ToString()); // TODO
-        //}
 
         [Fact]
         public void RemoveStrategyWithDocument_WhenGettingCommand_SqlCommandShouldBeExpected()
