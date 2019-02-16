@@ -1,4 +1,5 @@
 ﻿using System;
+using Ardalis.GuardClauses;
 
 namespace JsonStore
 {
@@ -8,8 +9,10 @@ namespace JsonStore
     {
         public DocumentState(DocumentStates currentState, TDocument document)
         {
+            Guard.Against.Null(document, nameof(document));
+
             CurrentState = currentState;
-            Document = document ?? throw new ArgumentException("The document cannot be null when creating a document state.", nameof(document));
+            Document = document;
         }
 
         public DocumentStates CurrentState { get; internal set; }

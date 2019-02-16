@@ -1,4 +1,5 @@
 ﻿using System;
+using Ardalis.GuardClauses;
 
 namespace JsonStore
 {
@@ -11,7 +12,9 @@ namespace JsonStore
 
         protected Document(TContent content)
         {
-            Content = content ?? throw new ArgumentNullException(nameof(content));
+            Guard.Against.Null(content, nameof(content));
+
+            Content = content;
         }
 
         public TId Id => GetId();

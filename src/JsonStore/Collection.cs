@@ -4,6 +4,7 @@ using JsonStore.Serializer;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 
 namespace JsonStore
 {
@@ -31,7 +32,10 @@ namespace JsonStore
 
         protected Collection(ISerializer serializer, IStoreDocuments documentsStore, string name = null)
         {
-            Serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+            Guard.Against.Null(serializer, nameof(serializer));
+            Guard.Against.Null(documentsStore, nameof(documentsStore));
+
+            Serializer = serializer;
             Name = GetCollectionName(name);
             DocumentsStore = documentsStore;
         }
@@ -86,7 +90,7 @@ namespace JsonStore
 
         public TDocument TrackDocumentFromSerializedContent(string contentString)
         {
-            if (contentString == null) throw new ArgumentNullException(nameof(contentString));
+            Guard.Against.NullOrWhiteSpace(contentString, nameof(contentString));
 
             var content = Serializer.Deserialize<TContent>(contentString);
 
@@ -105,7 +109,7 @@ namespace JsonStore
 
         public void Add(TDocument document)
         {
-            if (document == null) throw new ArgumentNullException(nameof(document));
+            Guard.Against.Null(document, nameof(document));
 
             if (_documentsInScope.ContainsKey(document.Id))
                 throw new InvalidOperationException("This document already exists on the underlying document collection.");
@@ -115,7 +119,7 @@ namespace JsonStore
 
         public void Add(TContent content)
         {
-            if (content == null) throw new ArgumentNullException(nameof(content));
+            Guard.Against.Null(content, nameof(content));
 
             var document = new TDocument { Content = content };
 
@@ -127,7 +131,7 @@ namespace JsonStore
 
         public void MarkAsModified(TId id)
         {
-            if (id == null) throw new ArgumentNullException(nameof(id));
+            Guard.Against.Null(id, nameof(id));
 
             var documentToModify = _documentsInScope[id];
 
@@ -139,7 +143,7 @@ namespace JsonStore
 
         public void MarkAsRemoved(TId id)
         {
-            if (id == null) throw new ArgumentNullException(nameof(id));
+            Guard.Against.Null(id, nameof(id));
 
             var documentToModify = _documentsInScope[id];
             documentToModify.CurrentState = DocumentStates.Removed;

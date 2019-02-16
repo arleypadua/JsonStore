@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Dapper;
 using SqlKata;
 using SqlKata.Compilers;
@@ -31,8 +32,11 @@ namespace JsonStore.Sql.Strategies
     {
         protected Strategy(Collection<TDocument, TId, TContent> collection, TDocument document)
         {
-            CollectionInstance = collection ?? throw new ArgumentNullException(nameof(collection));
-            Document = document ?? throw new ArgumentNullException(nameof(document));
+            Guard.Against.Null(collection, nameof(collection));
+            Guard.Against.Null(document, nameof(document));
+
+            CollectionInstance = collection;
+            Document = document;
         }
 
         protected TDocument Document { get; }
