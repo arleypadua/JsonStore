@@ -19,7 +19,7 @@ namespace JsonStore.Sql.LocalDbTests
         }
 
         [Fact]
-        public async Task CreatedPerson_WhenAdding_ThenOperationShouldSucceed()
+        public async Task NonExistingPerson_WhenAdding_ThenPersonSuccessfulyRestoredFromDatabase()
         {
             var carl = Person.Create(19, "Carl");
 
@@ -33,6 +33,38 @@ namespace JsonStore.Sql.LocalDbTests
             Assert.Equal(carl.Id, carlFromDb.Content.Id);
             Assert.Equal(carl.Age, carlFromDb.Content.Age);
             Assert.Equal(carl.Name, carlFromDb.Content.Name);
+        }
+
+        [Fact]
+        public async Task ExistingPerson_WhenChangingName_NameShouldBePersisted()
+        {
+            var mary = await _collection.GetFromStore(_fixture.Mary.Id);
+
+            mary.Content.ChangeName("Mary Mae");
+
+            _collection.MarkAsModified(mary.Id);
+
+            await _collection.CommitAsync();
+
+            var maryFromDb = await _collection.GetFromStore(mary.Id);
+
+            Assert.Equal(mary.Content.Id, maryFromDb.Content.Id);
+            Assert.Equal(mary.Content.Age, maryFromDb.Content.Age);
+            Assert.Equal(mary.Content.Name, maryFromDb.Content.Name);
+        }
+
+        [Fact]
+        public async Task ExistingPerson_WhenDeleting_RecordShouldBeDeleted()
+        {
+            var john = await _collection.GetFromStore(_fixture.John.Id);
+            
+            _collection.MarkAsRemoved(john.Id);
+
+            await _collection.CommitAsync();
+
+            var maryFromDb = await _collection.GetFromStore(john.Id);
+
+            Assert.Null(maryFromDb);
         }
     }
 }

@@ -25,5 +25,13 @@ namespace JsonStore.Sql.LocalDbTests.Model
         public string Id { get; private set; }
         public int Age { get; private set; }
         public string Name { get; private set; }
+
+        public void ChangeName(string newName)
+        {
+            if (string.IsNullOrWhiteSpace(newName))
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(newName));
+
+            Name = newName;
+        }
     }
 }

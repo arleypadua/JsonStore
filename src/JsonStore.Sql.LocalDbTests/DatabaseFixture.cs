@@ -25,7 +25,17 @@ namespace JsonStore.Sql.LocalDbTests
 	                    [Age] int not null,
                         [Name] varchar(250) not null
                     )");
+
+            var seedDataCollection = new PersonCollection(Connection);
+
+            seedDataCollection.Add(Mary);
+            seedDataCollection.Add(John);
+
+            seedDataCollection.CommitAsync().GetAwaiter().GetResult();
         }
+        
+        public Person Mary = Person.Create(25, "Mary");
+        public Person John = Person.Create(29, "John");
 
         public void Dispose()
         {
