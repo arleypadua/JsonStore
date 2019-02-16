@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>0.0.1</Version>
+    <Authors>Arley Padua</Authors>
+    <Description>SQL api for JsonStore</Description>
+    <PackageProjectUrl>https://github.com/arleypadua/JsonStore</PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
