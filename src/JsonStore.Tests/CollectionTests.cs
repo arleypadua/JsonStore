@@ -49,7 +49,7 @@ namespace JsonStore.Tests
         {
             var collection = new TestCollection(_documentsStore);
 
-            var doc = new Document<TestContent>(new TestContent("id", 5));
+            var doc = new TestDocument(new TestContent("id", 5));
 
             collection.Add(doc);
 
@@ -60,7 +60,7 @@ namespace JsonStore.Tests
         public void InstantiatedCollectionWithDocument_GetIndexedValuesInternal_ShouldReturnDefaultAndCustom()
         {
             var collection = new TestCollection(_documentsStore);
-            var doc = new Document<TestContent>(new TestContent("id", 5));
+            var doc = new TestDocument(new TestContent("id", 5));
             collection.Add(doc);
 
             var indexedValues = collection.GetIndexedValues(doc);
@@ -73,14 +73,14 @@ namespace JsonStore.Tests
             Assert.NotSame(string.Empty, indexedValues[Collection.DocumentKey]);
         }
 
-        class TestCollection : Collection<Document<TestContent>, TestContent>
+        class TestCollection : Collection<TestDocument, TestContent>
         {
             public TestCollection(IStoreDocuments documentsStore) 
                 : base(documentsStore)
             {
             }
 
-            protected override IReadOnlyDictionary<string, object> GetIndexedValuesInternal(Document<TestContent> document)
+            protected override IReadOnlyDictionary<string, object> GetIndexedValuesInternal(TestDocument document)
             {
                 return new Dictionary<string, object>
                 {
@@ -99,6 +99,25 @@ namespace JsonStore.Tests
 
             public string Id { get; private set; }
             public int AnyNumber { get; private set; }
+        }
+
+        class TestDocument : Document<TestContent>
+        {
+            public TestDocument(TestContent content)
+                : base(content)
+            {
+                
+            }
+
+            public TestDocument()
+            {
+                
+            }
+
+            protected override string GetId()
+            {
+                return Content.Id;
+            }
         }
     }
 }

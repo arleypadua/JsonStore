@@ -6,39 +6,7 @@ namespace JsonStore.Tests
     public class DocumentTests
     {
         [Fact]
-        public void Document_WithConventionId_WhenAccessingId_ShouldMatchTheContent()
-        {
-            string id = "doc-id";
-
-            var myContent = new TestContentStringId
-            {
-                Id = id,
-                AnyNumber = 5
-            };
-
-            var myDoc = new Document<TestContentStringId>(myContent);
-
-            Assert.Equal(id, myDoc.Id);
-        }
-
-        [Fact]
-        public void Document_WithoutMatchingIdTypes_WhenAccessingId_ShouldThrowException()
-        {
-            string id = "doc-id";
-
-            var myContent = new TestContentStringId
-            {
-                Id = id,
-                AnyNumber = 5
-            };
-
-            var myDoc = new Document<TestContentStringId, Guid>(myContent);
-
-            Assert.Throws<InvalidOperationException>(() => myDoc.Id);
-        }
-
-        [Fact]
-        public void Document_WithoutId_DefiningHowToGetId_WhenAccessingId_ShouldMatchTheContent()
+        public void Document_DefiningHowToGetId_WhenAccessingId_ShouldMatchTheContent()
         {
             string id = "doc-id";
 
