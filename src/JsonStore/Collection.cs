@@ -54,7 +54,7 @@ namespace JsonStore
         {
             var defaultValues = new Dictionary<string, object>
             {
-                [DocumentKey] = Serializer.Serialize(document)
+                [DocumentKey] = Serializer.Serialize(document.Content)
             };
 
             if (!ignoreIdKey)
