@@ -10,7 +10,7 @@ namespace JsonStore
 {
     public abstract class Collection
     {
-        protected ISerializer Serializer;
+        public ISerializer Serializer { get; protected set; }
         protected IStoreDocuments DocumentsStore;
         public string Name { get; protected set; }
 

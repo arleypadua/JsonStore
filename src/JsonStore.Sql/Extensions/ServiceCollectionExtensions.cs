@@ -8,8 +8,13 @@ namespace JsonStore.Sql.Extensions
     {
         public static IServiceCollection AddSqlServerJsonStore(this IServiceCollection services, string connectionString)
         {
-            services.AddScoped<IStoreDocuments, SqlServerDocumentStore>(provider => 
-                new SqlServerDocumentStore(new SqlConnection(connectionString)));
+            services.AddScoped<IStoreDocuments, SqlServerDocumentStore>(provider =>
+            {
+                var connection = new SqlConnection(connectionString);
+                connection.Open();
+
+                return new SqlServerDocumentStore(connection);
+            });
 
             return services;
         }
