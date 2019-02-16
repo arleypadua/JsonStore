@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using JsonStore.Abstractions;
+using Newtonsoft.Json;
 
 namespace JsonStore.Serializer
 {

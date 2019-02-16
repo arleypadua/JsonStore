@@ -36,6 +36,15 @@ namespace JsonStore
             DocumentsStore = documentsStore;
         }
 
+        public async Task<TDocument> GetFromStore(TId id)
+        {
+            string content = await DocumentsStore.GetDocumentContentById(this, id);
+
+            if (string.IsNullOrWhiteSpace(content)) return null;
+
+            return TrackDocumentFromSerializedContent(content);
+        }
+
         public async Task CommitAsync()
         {
             await DocumentsStore.StoreAsync(this);
@@ -75,11 +84,11 @@ namespace JsonStore
             return defaultValues;
         }
 
-        public TDocument TrackDocumentFromJsonContent(string jsonContent)
+        public TDocument TrackDocumentFromSerializedContent(string contentString)
         {
-            if (jsonContent == null) throw new ArgumentNullException(nameof(jsonContent));
+            if (contentString == null) throw new ArgumentNullException(nameof(contentString));
 
-            var content = Serializer.Deserialize<TContent>(jsonContent);
+            var content = Serializer.Deserialize<TContent>(contentString);
 
             var document = new TDocument
             {

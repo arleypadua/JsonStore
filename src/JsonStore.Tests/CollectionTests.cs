@@ -3,13 +3,23 @@ using Moq;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace JsonStore.Tests
 {
     public class CollectionTests
     {
-        private readonly IStoreDocuments _documentsStore = new Mock<IStoreDocuments>().Object;
+        private readonly IStoreDocuments _documentsStore;
+
+        public CollectionTests()
+        {
+            var documentsStoreMoq = new Mock<IStoreDocuments>();
+            documentsStoreMoq.Setup(s => s.GetDocumentContentById(It.IsAny<TestCollection>(), It.IsAny<string>()))
+                .ReturnsAsync("{ \"Id\":\"id\", \"AnyNumber\":5 }");
+
+            _documentsStore = documentsStoreMoq.Object;
+        }
         
         [Fact]
         public void InstantiatedCollection_ShouldHaveItsContentName()
@@ -23,7 +33,18 @@ namespace JsonStore.Tests
         public void InstantiatedCollection_LoadingFromJson_ShouldReturnMatchingDocument()
         {
             var collection = new TestCollection(_documentsStore);
-            var document = collection.TrackDocumentFromJsonContent("{ \"Id\":\"id\", \"AnyNumber\":5 }");
+            var document = collection.TrackDocumentFromSerializedContent("{ \"Id\":\"id\", \"AnyNumber\":5 }");
+
+            Assert.Equal("id", document.Content.Id);
+            Assert.Equal(5, document.Content.AnyNumber);
+            Assert.Equal(document.Id, document.Content.Id);
+        }
+
+        [Fact]
+        public async Task InstantiatedCollection_GettingContentFromStore_ShouldReturnMatchingDocument()
+        {
+            var collection = new TestCollection(_documentsStore);
+            var document = await collection.GetFromStore("id");
 
             Assert.Equal("id", document.Content.Id);
             Assert.Equal(5, document.Content.AnyNumber);
@@ -35,7 +56,7 @@ namespace JsonStore.Tests
         {
             void TrackFromJson(TestCollection collectionParam)
             {
-                collectionParam.TrackDocumentFromJsonContent("{ \"Id\":\"id\", \"AnyNumber\":5 }");
+                collectionParam.TrackDocumentFromSerializedContent("{ \"Id\":\"id\", \"AnyNumber\":5 }");
             }
 
             var collection = new TestCollection(_documentsStore);

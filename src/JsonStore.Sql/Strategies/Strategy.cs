@@ -9,7 +9,7 @@ namespace JsonStore.Sql.Strategies
 {
     internal abstract class Strategy
     {
-        protected static readonly SqlServerCompiler Compiler = new SqlServerCompiler();
+        internal static readonly SqlServerCompiler Compiler = new SqlServerCompiler();
 
         internal abstract SqlResult GetCommand();
 

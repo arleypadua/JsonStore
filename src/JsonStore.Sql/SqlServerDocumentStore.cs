@@ -1,8 +1,11 @@
-﻿using System.Data;
+﻿using Dapper;
+using JsonStore.Abstractions;
+using JsonStore.Sql.Model;
+using JsonStore.Sql.Strategies;
+using SqlKata;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using JsonStore.Abstractions;
-using JsonStore.Sql.Strategies;
 
 namespace JsonStore.Sql
 {
@@ -30,6 +33,21 @@ namespace JsonStore.Sql
                     await command.Execute(_dbConnection, transaction);
                 }
             }
+        }
+
+        public async Task<string> GetDocumentContentById<TDocument, TId, TContent>(Collection<TDocument, TId, TContent> collection, TId id) 
+            where TDocument : Document<TContent, TId>, new() 
+            where TContent : class
+        {
+            var query = new Query(collection.Name)
+                .Where(Collection.IdKey, id);
+
+            var sqlResult = Strategy.Compiler.Compile(query);
+
+            var record = (await _dbConnection.QueryAsync<SqlDocument>(sqlResult.Sql, sqlResult.NamedBindings))
+                .FirstOrDefault();
+            
+            return record?._Document;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace JsonStore.Serializer
+﻿namespace JsonStore.Abstractions
 {
     public interface ISerializer
     {

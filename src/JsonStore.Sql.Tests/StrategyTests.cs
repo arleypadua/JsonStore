@@ -15,7 +15,7 @@ namespace JsonStore.Sql.Tests
         public void InsertStrategyWithDocument_WhenGettingCommand_SqlCommandShouldBeExpected()
         {
             var collection = new TestCollection(_documentsStore);
-            var document = collection.TrackDocumentFromJsonContent("{ \"Id\":\"id\", \"MyNumber\":5 }");
+            var document = collection.TrackDocumentFromSerializedContent("{ \"Id\":\"id\", \"MyNumber\":5 }");
 
             var strategy = new InsertStrategy<TestDocument, string, TestContent>(collection, document);
             var command = strategy.GetCommand();
@@ -27,7 +27,7 @@ namespace JsonStore.Sql.Tests
         public void UpdateStrategyWithDocument_WhenGettingCommand_SqlCommandShouldBeExpected()
         {
             var collection = new TestCollection(_documentsStore);
-            var document = collection.TrackDocumentFromJsonContent("{ \"Id\":\"id\", \"MyNumber\":5 }");
+            var document = collection.TrackDocumentFromSerializedContent("{ \"Id\":\"id\", \"MyNumber\":5 }");
 
             document.Content.ChangeNumber(10);
 
@@ -41,7 +41,7 @@ namespace JsonStore.Sql.Tests
         public void RemoveStrategyWithDocument_WhenGettingCommand_SqlCommandShouldBeExpected()
         {
             var collection = new TestCollection(_documentsStore);
-            var document = collection.TrackDocumentFromJsonContent("{ \"Id\":\"id\", \"MyNumber\":5 }");
+            var document = collection.TrackDocumentFromSerializedContent("{ \"Id\":\"id\", \"MyNumber\":5 }");
 
             var strategy = new RemoveStrategy<TestDocument, string, TestContent>(collection, document);
             var command = strategy.GetCommand();
