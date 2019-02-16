@@ -1,14 +1,10 @@
 ﻿using System.Data;
-using System.Data.SqlClient;
-using JsonStore.Abstractions;
-using JsonStore.SqlServer.Strategies;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper;
-using SqlKata.Compilers;
-using SqlKata.Execution;
+using JsonStore.Abstractions;
+using JsonStore.Sql.Strategies;
 
-namespace JsonStore.SqlServer
+namespace JsonStore.Sql
 {
     public class SqlServerDocumentStore : IStoreDocuments
     {

@@ -1,12 +1,11 @@
 using JsonStore.Abstractions;
-using JsonStore.SqlServer.Strategies;
+using JsonStore.Sql.Strategies;
 using Moq;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace JsonStore.SqlServer.Tests
+namespace JsonStore.Sql.Tests
 {
     public class StrategyTests
     {

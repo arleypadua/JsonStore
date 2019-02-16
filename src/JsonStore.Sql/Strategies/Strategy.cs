@@ -1,11 +1,11 @@
-﻿using Dapper;
-using SqlKata;
-using SqlKata.Compilers;
-using System;
+﻿using System;
 using System.Data;
 using System.Threading.Tasks;
+using Dapper;
+using SqlKata;
+using SqlKata.Compilers;
 
-namespace JsonStore.SqlServer.Strategies
+namespace JsonStore.Sql.Strategies
 {
     internal abstract class Strategy
     {

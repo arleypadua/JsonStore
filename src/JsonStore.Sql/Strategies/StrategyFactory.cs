@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JsonStore.SqlServer.Strategies
+namespace JsonStore.Sql.Strategies
 {
     internal class StrategyFactory
     {
