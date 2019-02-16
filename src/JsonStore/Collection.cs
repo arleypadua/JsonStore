@@ -113,6 +113,18 @@ namespace JsonStore
             _documentsInScope.Add(document.Id, new DocumentState<TDocument, TId, TContent>(DocumentStates.Added, document));
         }
 
+        public void Add(TContent content)
+        {
+            if (content == null) throw new ArgumentNullException(nameof(content));
+
+            var document = new TDocument { Content = content };
+
+            if (_documentsInScope.ContainsKey(document.Id))
+                throw new InvalidOperationException("This document already exists on the underlying document collection.");
+
+            _documentsInScope.Add(document.Id, new DocumentState<TDocument, TId, TContent>(DocumentStates.Added, document));
+        }
+
         public void MarkAsModified(TId id)
         {
             if (id == null) throw new ArgumentNullException(nameof(id));
@@ -150,12 +162,12 @@ namespace JsonStore
         where TContent : class
         where TDocument : Document<TContent, string>, new()
     {
-        protected Collection(IStoreDocuments documentsStore, string name = null) 
+        protected Collection(IStoreDocuments documentsStore, string name = null)
             : base(documentsStore, name)
         {
         }
 
-        protected Collection(ISerializer serializer, IStoreDocuments documentsStore, string name = null) 
+        protected Collection(ISerializer serializer, IStoreDocuments documentsStore, string name = null)
             : base(serializer, documentsStore, name)
         {
         }

@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using System;
+using Dapper;
 using JsonStore.Abstractions;
 using JsonStore.Sql.Model;
 using JsonStore.Sql.Strategies;
@@ -28,9 +29,19 @@ namespace JsonStore.Sql
             
             using (var transaction = _dbConnection.BeginTransaction())
             {
-                foreach (var command in commands)
+                try
                 {
-                    await command.Execute(_dbConnection, transaction);
+                    foreach (var command in commands)
+                    {
+                        await command.Execute(_dbConnection, transaction);
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
                 }
             }
         }
