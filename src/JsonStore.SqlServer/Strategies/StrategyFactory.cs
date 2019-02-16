@@ -4,7 +4,7 @@ namespace JsonStore.SqlServer.Strategies
 {
     internal class StrategyFactory
     {
-        public static Strategy GetStrategy<TDocument, TId, TContent>(
+        internal static Strategy GetStrategy<TDocument, TId, TContent>(
             Collection<TDocument, TId, TContent> collectionInstance,
             DocumentState<TDocument, TId, TContent> documentState)
             where TContent : class

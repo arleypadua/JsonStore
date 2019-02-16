@@ -1,17 +1,31 @@
-﻿using SqlKata;
+﻿using Dapper;
+using SqlKata;
 using SqlKata.Compilers;
 using System;
+using System.Data;
+using System.Threading.Tasks;
 
 namespace JsonStore.SqlServer.Strategies
 {
-    public abstract class Strategy
+    internal abstract class Strategy
     {
         protected static readonly SqlServerCompiler Compiler = new SqlServerCompiler();
 
-        public abstract SqlResult GetCommand();
+        internal abstract SqlResult GetCommand();
+
+        internal virtual Task Execute(IDbConnection connection, IDbTransaction transaction = null)
+        {
+            var command = GetCommand();
+
+            return connection.ExecuteAsync(
+                command.Sql,
+                command.NamedBindings,
+                transaction,
+                30);
+        }
     }
 
-    public abstract class Strategy<TDocument, TId, TContent> : Strategy
+    internal abstract class Strategy<TDocument, TId, TContent> : Strategy
         where TContent : class
         where TDocument : Document<TContent, TId>, new()
     {
