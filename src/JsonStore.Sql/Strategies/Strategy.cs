@@ -13,7 +13,7 @@ namespace JsonStore.Sql.Strategies
 
         internal abstract SqlResult GetCommand();
 
-        internal virtual Task Execute(IDbConnection connection, IDbTransaction transaction = null)
+        internal virtual Task Execute(IDbConnection connection, IDbTransaction transaction = null, int commandTimeout = 30)
         {
             var command = GetCommand();
 
@@ -21,7 +21,7 @@ namespace JsonStore.Sql.Strategies
                 command.Sql,
                 command.NamedBindings,
                 transaction,
-                30);
+                commandTimeout);
         }
     }
 
