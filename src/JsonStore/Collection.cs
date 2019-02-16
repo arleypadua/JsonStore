@@ -1,7 +1,6 @@
 ﻿using System;
 using JsonStore.Abstractions;
 using JsonStore.Serializer;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +9,7 @@ namespace JsonStore
 {
     public abstract class Collection
     {
-        protected JsonSerializerSettings JsonSerializerSettings;
+        protected ISerializer Serializer;
         protected IStoreDocuments DocumentsStore;
         public string Name { get; protected set; }
 
@@ -26,23 +25,15 @@ namespace JsonStore
         private readonly Dictionary<TId, DocumentState<TDocument, TId, TContent>> _documentsInScope = new Dictionary<TId, DocumentState<TDocument, TId, TContent>>();
 
         protected Collection(IStoreDocuments documentsStore, string name = null)
+            : this(new JsonSerializer(), documentsStore, name)
         {
-            Name = GetCollectionName(name);
-
-            DocumentsStore = documentsStore;
-            JsonSerializerSettings = new JsonSerializerSettings
-            {
-                ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
-                ContractResolver = new PrivateSetterContractResolver()
-            };
         }
 
-        protected Collection(JsonSerializerSettings jsonSerializerSettings, IStoreDocuments documentsStore, string name = null)
+        protected Collection(ISerializer serializer, IStoreDocuments documentsStore, string name = null)
         {
+            Serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
             Name = GetCollectionName(name);
-
             DocumentsStore = documentsStore;
-            JsonSerializerSettings = jsonSerializerSettings;
         }
 
         public async Task CommitAsync()
@@ -63,7 +54,7 @@ namespace JsonStore
         {
             var defaultValues = new Dictionary<string, object>
             {
-                [DocumentKey] = JsonConvert.SerializeObject(document.Content, JsonSerializerSettings)
+                [DocumentKey] = Serializer.Serialize(document)
             };
 
             if (!ignoreIdKey)
@@ -88,7 +79,8 @@ namespace JsonStore
         {
             if (jsonContent == null) throw new ArgumentNullException(nameof(jsonContent));
 
-            var content = JsonConvert.DeserializeObject<TContent>(jsonContent);
+            var content = Serializer.Deserialize<TContent>(jsonContent);
+
             var document = new TDocument
             {
                 Content = content
@@ -154,8 +146,8 @@ namespace JsonStore
         {
         }
 
-        protected Collection(JsonSerializerSettings jsonSerializerSettings, IStoreDocuments documentsStore, string name = null) 
-            : base(jsonSerializerSettings, documentsStore, name)
+        protected Collection(ISerializer serializer, IStoreDocuments documentsStore, string name = null) 
+            : base(serializer, documentsStore, name)
         {
         }
     }

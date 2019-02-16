@@ -80,11 +80,6 @@ namespace JsonStore.Tests
             {
             }
 
-            public TestCollection(JsonSerializerSettings jsonSerializerSettings, IStoreDocuments documentsStore) 
-                : base(jsonSerializerSettings, documentsStore)
-            {
-            }
-
             protected override IReadOnlyDictionary<string, object> GetIndexedValuesInternal(Document<TestContent> document)
             {
                 return new Dictionary<string, object>
