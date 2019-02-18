@@ -11,7 +11,7 @@ It also works as a micro-orm when using with the **JsonStore.Sql** extension pac
 PM> Install-Package JsonStore.Sql
 ```
 
-Given have the following class that you want to store
+Given the following class to be stored
 ```csharp
 public class Foo
 {
@@ -50,7 +50,7 @@ protected override IReadOnlyDictionary<string, object> GetIndexedValuesInternal(
 };
 ```
 
-Notice that the collection requires an instance of `IStoreDocuments`. The dependency injection configured on the first step is able to provide an instance of it, but you can also implement one yourself.
+Notice that the collection requires an instance of `IStoreDocuments`. The dependency injection configured on the 4th step will be able to provide an instance of it, but you can also implement one yourself.
 
 ```
 NOTE: the default implementation of IStoreDocuments is an instance of SqlServerDocumentStore.
