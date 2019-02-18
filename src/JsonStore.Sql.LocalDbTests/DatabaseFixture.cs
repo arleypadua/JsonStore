@@ -36,7 +36,7 @@ namespace JsonStore.Sql.LocalDbTests
         
         public Person Mary = Person.Create(25, "Mary");
         public Person John = Person.Create(29, "John");
-
+        public string Test() => "";
         public void Dispose()
         {
             Connection.Execute(
